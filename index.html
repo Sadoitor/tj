@@ -11,15 +11,13 @@
   --page:#F6F8FA; --panel:#fff; --text:#0F172A; --muted:#667085; --line:#E9EEF0;
   --radius:18px; --shadow:0 12px 32px rgba(15,23,42,.08), 0 2px 10px rgba(15,23,42,.04);
   --ring:rgba(4,164,67,.3);
-
-  /* единая сетка */
-  --wrap:1100px;   /* максимальная ширина контейнеров */
-  --gutter:14px;   /* внутренние отступы по бокам */
+  --wrap:1100px;     /* единая ширина */
+  --gutter:14px;     /* боковые отступы */
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--page);color:var(--text);font:16px/1.6 Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 
-/* ========= HEADER ========= */
+/* HEADER */
 .appbar{position:sticky;top:0;z-index:50;background:#000;border-bottom:1px solid #121212}
 .appbar .in{max-width:var(--wrap);margin:0 auto;padding:12px var(--gutter);display:flex;align-items:center;gap:14px}
 .logo{width:34px;height:34px;border-radius:10px;overflow:hidden;background:#0f0f0f;flex:0 0 auto}
@@ -28,14 +26,9 @@ body{margin:0;background:var(--page);color:var(--text);font:16px/1.6 Inter,syste
 .nav{margin-left:auto;display:flex;gap:22px}
 .nav a{display:inline-block;color:#fff;text-decoration:none;font-weight:800;opacity:.7;padding:10px 6px;position:relative}
 .nav a.active,.nav a:hover{opacity:1}
-/* подчёркивание строго по центру ссылки */
-.nav a.active::after{
-  content:""; position:absolute; bottom:-6px; left:50%;
-  transform:translateX(-50%);
-  width:60%; height:3px; border-radius:3px; background:#fff;
-}
+.nav a.active::after{content:"";position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);width:60%;height:3px;border-radius:3px;background:#fff}
 
-/* ========= LAYOUT ========= */
+/* LAYOUT */
 .container{max-width:var(--wrap);margin:18px auto;padding:0 var(--gutter)}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
 .header{display:flex;align-items:center;gap:14px;padding:18px 18px 0}
@@ -50,13 +43,13 @@ body{margin:0;background:var(--page);color:var(--text);font:16px/1.6 Inter,syste
 .isub{color:#9AA4B2}
 .iact{color:#7A8595;font-weight:700;cursor:pointer}
 
-/* ========= BOTTOM ACTION ========= */
+/* BOTTOM ACTION */
 .bottomBar{position:sticky;bottom:0;z-index:40}
 .bottomInner{max-width:var(--wrap);margin:0 auto;padding:0 var(--gutter)}
 .bigbtn{display:block;width:100%;background:var(--brand);color:#fff;border:none;border-radius:16px;padding:16px 18px;font-weight:900;box-shadow:0 16px 38px rgba(4,164,67,.25);margin:12px 0}
 .bigbtn:active{transform:translateY(1px)}
 
-/* ========= DIALOGS ========= */
+/* DIALOGS */
 dialog{border:none;border-radius:22px;width:min(880px,96vw);padding:0;box-shadow:0 28px 70px rgba(2,8,23,.45)}
 dialog::backdrop{background:rgba(2,8,23,.5);backdrop-filter:blur(2px)}
 .dhead{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--line);background:#fff;border-top-left-radius:22px;border-top-right-radius:22px}
@@ -70,7 +63,7 @@ dialog::backdrop{background:rgba(2,8,23,.5);backdrop-filter:blur(2px)}
 .btn-primary{background:var(--brand);border:none;color:#fff}
 .btn-accent{background:var(--accent);border:none;color:#2b2000}
 
-/* ========= SONG PAGE ========= */
+/* SONG PAGE */
 .songCard{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:18px}
 .shead{display:flex;align-items:center;justify-content:space-between}
 .smeta{color:#7a8595;font-weight:700}
@@ -83,15 +76,14 @@ select{border:1px solid var(--line);border-radius:12px;background:#fff;padding:8
 .cw .ch{font-weight:800;font-size:.86em;line-height:1;color:#0A6A7A}
 .cw .tx{line-height:1.25}
 
-/* ========= LOADERS / TOAST ========= */
+/* LOADERS & TOAST */
 .overlay{position:fixed;inset:0;background:rgba(255,255,255,.45);backdrop-filter:blur(1.6px);display:none;align-items:center;justify-content:center;z-index:60}
 .spinner{width:54px;height:54px;border:6px solid #e9eef0;border-top-color:var(--brand);border-radius:50%;animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .toast{position:fixed;left:50%;transform:translateX(-50%);top:14px;z-index:70;display:none}
 .toast .msg{background:#0b0b0b;color:#fff;border:1px solid #222;padding:12px 16px;border-radius:12px;box-shadow:0 16px 45px rgba(0,0,0,.35)}
 
-/* ========= FOOTER ========= */
-.footer{background:transparent}
+/* FOOTER */
 .footer .in{max-width:var(--wrap);margin:24px auto 28px;padding:0 var(--gutter);color:#7a8595;font-size:13px}
 </style>
 </head>
@@ -114,9 +106,7 @@ select{border:1px solid var(--line);border-radius:12px;background:#fff;padding:8
 <!-- bottom action bar -->
 <div class="bottomBar"><div class="bottomInner"><div id="bigAction"></div></div></div>
 
-<footer class="footer">
-  <div class="in">© <span id="year"></span> Sadoitor • Сделано с любовью к музыке</div>
-</footer>
+<footer class="footer"><div class="in">© <span id="year"></span> Sadoitor • Сделано с любовью к музыке</div></footer>
 
 <!-- Overlay/Toast -->
 <div id="overlay" class="overlay"><div class="spinner"></div></div>
@@ -150,8 +140,8 @@ select{border:1px solid var(--line);border-radius:12px;background:#fff;padding:8
 </dialog>
 
 <script>
-/* CONFIG */
-const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbx3u6Rheu-rtntNEN8Hs491fhEoksqinhvP1dE-83-KUK8NgtKVM_KxXK5HwHs7c8oUxA/exec';
+/* CONFIG: вставьте ваш Apps Script URL */
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxCIVDzpaeckjN0wS6feUM5ZjFdqrd5-OMtbhdzrGl8E_d0k2o8dNwEMdr15Sb2I6_wMw/exec';
 
 /* HELPERS */
 const $ = s => document.querySelector(s);
@@ -250,7 +240,6 @@ function renderArtists(){
       <div class="iact" data-edit="${a.id}">Изменить</div>
     </div>`).join('');
 
-  // клик по строке -> на страницы песен с фильтром по артисту
   alist.querySelectorAll('.item').forEach(el=>{
     el.addEventListener('click', (e)=>{
       if(e.target.closest('.iact')) return;
@@ -289,19 +278,36 @@ function renderSongs(){
   const slist = page.querySelector('#slist');
   const qEl = page.querySelector('#searchSongs');
 
+  // пришли из «Исполнителей»
+  let presetQuery = "";
   if(artistId){
     const a = artists.find(x=>String(x.id)===String(artistId));
-    if(a){ qEl.value = a.name; }
+    if(a){ qEl.value = a.name; presetQuery = a.name.toLowerCase(); }
   }
 
-  const render = ()=>{
+  const doRender = ()=>{
     const q=(qEl.value||'').toLowerCase().trim();
-    const data = songs.filter(s=>{
-      const a = artists.find(x=>x.id==s.artistId);
-      const inArtist = a && a.name.toLowerCase().includes(q);
-      const inTitle  = s.title.toLowerCase().includes(q);
-      return !q || inArtist || inTitle;
-    });
+    let data = songs;
+
+    if (q){
+      data = songs.filter(s=>{
+        const a = artists.find(x=>x.id==s.artistId);
+        const inArtist = a && a.name.toLowerCase().includes(q);
+        const inTitle  = s.title.toLowerCase().includes(q);
+        return inArtist || inTitle;
+      });
+      // мягкий откат: если фильтр дал 0 — покажем песни выбранного артиста
+      if (data.length===0 && presetQuery){
+        const aid = String(artistId||"");
+        data = songs.filter(s=>String(s.artistId)===aid);
+      }
+    }
+
+    if (!data.length){
+      slist.innerHTML = `<div class="isub" style="padding:18px">Песни не найдены</div>`;
+      return;
+    }
+
     slist.innerHTML = data.map(s=>{
       const a = artists.find(x=>x.id==s.artistId);
       return `
@@ -313,10 +319,12 @@ function renderSongs(){
           <div class="iact" data-edit="${s.id}">Изменить</div>
         </div>`;
     }).join('');
+
     slist.querySelectorAll('[data-edit]').forEach(x=>x.onclick=(ev)=>{ ev.stopPropagation(); openSongEdit(x.dataset.edit); });
   };
-  render();
-  qEl.oninput = render;
+
+  doRender();
+  qEl.oninput = doRender;
 
   bigAction.innerHTML = `<button class="bigbtn" id="addSongBig">Добавить текст песни</button>`;
   $('#addSongBig').onclick = openSongAdd;

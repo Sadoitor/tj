@@ -6,7 +6,6 @@
 <title>Sadoitor</title>
 <meta name="color-scheme" content="light">
 <style>
-/* ============ THEME ============ */
 :root{
   --brand:#04A443; --accent:#F3C432;
   --page:#F6F8FA; --panel:#fff; --text:#0F172A; --muted:#667085; --line:#E9EEF0;
@@ -16,18 +15,18 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--page);color:var(--text);font:16px/1.6 Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 
-/* ============ APP BAR ============ */
+/* HEADER */
 .appbar{position:sticky;top:0;z-index:50;background:#000;border-bottom:1px solid #121212}
-.appbar .in{max-width:1100px;margin:0 auto;padding:12px 14px;display:flex;align-items:center;gap:14px}
-.logo{width:34px;height:34px;border-radius:10px;overflow:hidden;background:#0f0f0f}
+.appbar .in{max-width:1100px;margin:0 auto;padding:12px 14px;display:flex;align-items:center;gap:14px;overflow:hidden}
+.logo{width:34px;height:34px;border-radius:10px;overflow:hidden;background:#0f0f0f;flex:0 0 auto}
 .logo img{width:100%;height:100%;object-fit:contain}
 .brand{color:#fff;font-weight:900;letter-spacing:.2px}
 .nav{margin-left:auto;display:flex;gap:18px}
 .nav a{color:#fff;text-decoration:none;font-weight:800;opacity:.7;padding:8px 0;position:relative}
 .nav a.active,.nav a:hover{opacity:1}
-.nav a.active::after{content:"";position:absolute;left:0;right:0;bottom:-10px;height:3px;border-radius:3px;background:#fff}
+.nav a.active::after{content:"";position:absolute;left:8px;right:8px;bottom:-6px;height:3px;border-radius:3px;background:#fff}
 
-/* ============ LAYOUT ============ */
+/* LAYOUT */
 .container{max-width:1100px;margin:18px auto;padding:0 14px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
 .header{display:flex;align-items:center;gap:14px;padding:18px 18px 0}
@@ -35,7 +34,7 @@ body{margin:0;background:var(--page);color:var(--text);font:16px/1.6 Inter,syste
 .searchRow{display:flex;gap:10px;align-items:center;padding:12px 18px 18px}
 .search{flex:1;border:1px solid var(--line);background:#fff;border-radius:999px;padding:12px 16px}
 .list{padding:0 18px 18px}
-.item{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.item{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);cursor:pointer}
 .item:last-child{border-bottom:none}
 .avatar{width:46px;height:46px;border-radius:50%;object-fit:cover;background:#EEF1F4;border:1px solid var(--line)}
 .itext{flex:1}
@@ -43,11 +42,14 @@ body{margin:0;background:var(--page);color:var(--text);font:16px/1.6 Inter,syste
 .isub{color:#9AA4B2}
 .iact{color:#7A8595;font-weight:700;cursor:pointer}
 .footer{max-width:1100px;margin:24px auto 28px;padding:0 14px;color:#7a8595;font-size:13px}
-.bigbar{position:sticky;bottom:18px;z-index:40}
-.bigbtn{display:block;width:100%;max-width:1100px;margin:12px auto 0;background:var(--brand);color:#fff;border:none;border-radius:16px;padding:16px 18px;font-weight:900;box-shadow:0 16px 38px rgba(4,164,67,.25)}
+
+/* bottom action bar — внутри контейнера */
+.bottomBar{position:sticky;bottom:0;z-index:40}
+.bottomInner{max-width:1100px;margin:0 auto;padding:0 14px}
+.bigbtn{display:block;width:100%;background:var(--brand);color:#fff;border:none;border-radius:16px;padding:16px 18px;font-weight:900;box-shadow:0 16px 38px rgba(4,164,67,.25);margin:12px 0}
 .bigbtn:active{transform:translateY(1px)}
 
-/* ============ DIALOGS ============ */
+/* DIALOGS */
 dialog{border:none;border-radius:22px;width:min(880px,96vw);padding:0;box-shadow:0 28px 70px rgba(2,8,23,.45)}
 dialog::backdrop{background:rgba(2,8,23,.5);backdrop-filter:blur(2px)}
 .dhead{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--line);background:#fff;border-top-left-radius:22px;border-top-right-radius:22px}
@@ -61,7 +63,7 @@ dialog::backdrop{background:rgba(2,8,23,.5);backdrop-filter:blur(2px)}
 .btn-primary{background:var(--brand);border:none;color:#fff}
 .btn-accent{background:var(--accent);border:none;color:#2b2000}
 
-/* ============ PLAYER PAGE ============ */
+/* SONG PAGE */
 .songCard{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:18px}
 .shead{display:flex;align-items:center;justify-content:space-between}
 .smeta{color:#7a8595;font-weight:700}
@@ -74,7 +76,7 @@ select{border:1px solid var(--line);border-radius:12px;background:#fff;padding:8
 .cw .ch{font-weight:800;font-size:.86em;line-height:1;color:#0A6A7A}
 .cw .tx{line-height:1.25}
 
-/* ============ LOADERS ============ */
+/* LOADERS & TOAST */
 .overlay{position:fixed;inset:0;background:rgba(255,255,255,.45);backdrop-filter:blur(1.6px);display:none;align-items:center;justify-content:center;z-index:60}
 .spinner{width:54px;height:54px;border:6px solid #e9eef0;border-top-color:var(--brand);border-radius:50%;animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -84,15 +86,13 @@ select{border:1px solid var(--line);border-radius:12px;background:#fff;padding:8
 .sitem .a{width:46px;height:46px;border-radius:50%;background:#eef2f6}
 .sitem .b{flex:1}
 .sitem .b .skel{margin:6px 0}
-
-/* ============ TOAST ============ */
 .toast{position:fixed;left:50%;transform:translateX(-50%);top:14px;z-index:70;display:none}
 .toast .msg{background:#0b0b0b;color:#fff;border:1px solid #222;padding:12px 16px;border-radius:12px;box-shadow:0 16px 45px rgba(0,0,0,.35)}
 </style>
 </head>
 <body>
 
-<!-- ============ HEADER ============ -->
+<!-- HEADER -->
 <div class="appbar">
   <div class="in">
     <div class="logo"><img src="https://i.postimg.cc/NFrYFn0x/112.png" alt=""></div>
@@ -106,17 +106,18 @@ select{border:1px solid var(--line);border-radius:12px;background:#fff;padding:8
 
 <div id="app" class="container"></div>
 
-<div class="bigbar" id="bigbar"></div>
+<!-- bottom action bar (внутри контейнера) -->
+<div class="bottomBar"><div class="bottomInner"><div id="bigAction"></div></div></div>
 
 <footer class="footer">
   © <span id="year"></span> Sadoitor • Сделано с любовью к музыке • Цвета бренда: #04A443 и #F3C432
 </footer>
 
-<!-- ===== Overlay loader / Toast ===== -->
+<!-- Overlay/Toast -->
 <div id="overlay" class="overlay"><div class="spinner"></div></div>
 <div id="toast" class="toast"><div class="msg" id="toastMsg"></div></div>
 
-<!-- ===== Modals: Artist & Song (add/edit) ===== -->
+<!-- Modals -->
 <dialog id="artistModal">
   <div class="dhead"><strong id="artistModalTitle">Исполнитель</strong><button id="closeArtistModal" class="btn">✕</button></div>
   <div class="dbody">
@@ -152,20 +153,35 @@ select{border:1px solid var(--line);border-radius:12px;background:#fff;padding:8
 </dialog>
 
 <script>
-/* ========= CONFIG ========= */
-const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbytGKdN1Tza3-zEOWBgOA2W8DqmfNGH5I-dW-HtChEAigWdPOxe1rTaFgSIbDzRbgmStg/exec';  // <-- URL Apps Script (…/exec)
+/* CONFIG */
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbx3u6Rheu-rtntNEN8Hs491fhEoksqinhvP1dE-83-KUK8NgtKVM_KxXK5HwHs7c8oUxA/exec';  // <-- Apps Script URL (.../exec)
 
-/* ========= HELPERS ========= */
+/* HELPERS */
 const $ = s => document.querySelector(s);
-const app = $('#app'), bigbar = $('#bigbar');
+const app = $('#app'), bigAction = $('#bigAction');
 $('#year').textContent = new Date().getFullYear();
-
 function showOverlay(v=true){ $('#overlay').style.display = v?'flex':'none'; }
 function toast(msg, ms=2200){ $('#toastMsg').textContent = msg; $('#toast').style.display='block'; setTimeout(()=>$('#toast').style.display='none', ms); }
-function esc(s){return (s||'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
 function fileToDataURL(f){ return new Promise(res=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.readAsDataURL(f); }); }
 
-/* ========= API (GET/POST) ========= */
+/* drive viewer -> direct */
+function driveDirectUrl(u){
+  if(!u) return '';
+  const m = String(u).match(/\/file\/d\/([^/]+)/);
+  const id = m ? m[1] : (/^[A-Za-z0-9_-]{10,}$/.test(u) ? u : null);
+  return id ? `https://drive.google.com/uc?export=view&id=${id}` : u;
+}
+/* placeholder svg (кружок) */
+const AVATAR_PLACEHOLDER = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+  `<svg xmlns="http://www.w3.org/2000/svg" width="92" height="92" viewBox="0 0 92 92">
+    <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#f2f5f8"/><stop offset=".7" stop-color="#e9eef3"/></linearGradient></defs>
+    <circle cx="46" cy="46" r="46" fill="url(#g)"/>
+    <circle cx="46" cy="34" r="16" fill="#d8e1ea"/>
+    <path d="M18 80a28 28 0 0156 0Z" fill="#d8e1ea"/>
+  </svg>`
+);
+
+/* API */
 async function api(action, payload = {}) {
   const isGet = action === 'catalog' || action === 'lists';
   const qp = action === 'catalog' ? '?action=catalog' : action === 'lists' ? '?action=lists' : '';
@@ -178,12 +194,11 @@ async function api(action, payload = {}) {
   try { return JSON.parse(text); } catch { throw new Error(text || 'Server returned non-JSON'); }
 }
 
-/* ========= STATE ========= */
-let artists = [];  // {id,name,bio,photoUrl}
-let songs = [];    // {id,title,artistId,key,tags,text}
-let catalog = [];  // artists + songs grouped (для удобства рендера)
+/* STATE */
+let artists = [];
+let songs = [];
 
-/* ========= CHORDS ========= */
+/* CHORDS + render */
 const SHARP=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 const FLAT =['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
 const useSharp = ch=>/#/.test(ch);
@@ -198,147 +213,152 @@ function parseChordPro(text){
       if(!part) continue;
       if(part.startsWith('[')&&part.endsWith(']')) pending=part.slice(1,-1).trim();
       else{
-        if(pending){ html+=`<span class="cw"><span class="ch">${esc(pending)}</span><span class="tx">${esc(part)}</span></span>`; pending=null; }
-        else html+=`<span class="cw"><span class="ch"></span><span class="tx">${esc(part)}</span></span>`;
+        if(pending){ html+=`<span class="cw"><span class="ch">${part?pending:pending}</span><span class="tx">${part}</span></span>`; pending=null; }
+        else html+=`<span class="cw"><span class="ch"></span><span class="tx">${part}</span></span>`;
       }
     }
-    if(pending){ html+=`<span class="cw"><span class="ch">${esc(pending)}</span><span class="tx">&nbsp;</span></span>`; }
+    if(pending){ html+=`<span class="cw"><span class="ch">${pending}</span><span class="tx">&nbsp;</span></span>`; }
     out.push(html+'</span>');
   }
-  return out.join('\n');
+  return out.join('\n').replaceAll('<span class="tx"></span>','<span class="tx">&nbsp;</span>');
 }
 
-/* ========= DATA FLOW ========= */
+/* DATA */
 async function loadAll(){
-  showOverlay(true);
-  try{
-    const cat = await api('catalog');
-    if(!cat.ok) throw new Error(cat.error||'catalog error');
-    catalog = cat.data||[];
-
-    const lists = await api('lists');
-    artists = lists.artists||[]; songs = lists.songs||[];
-  }finally{
-    showOverlay(false);
-  }
+  const cat = await api('catalog');
+  if(!cat.ok) throw new Error(cat.error||'catalog error');
+  // каталог нам не нужен напрямую — запросим списки, где уже нормализовано
+  const lists = await api('lists');
+  artists = (lists.artists||[]).map(a=>({ ...a, photoUrl: driveDirectUrl(a.photoUrl||'') }));
+  songs = lists.songs||[];
 }
 
-/* ========= ROUTER ========= */
+/* ROUTER */
 window.addEventListener('hashchange', route);
 async function route(){
-  // активная вкладка
   const hash = location.hash || '#/artists';
   $('#nav-artists').classList.toggle('active', hash.startsWith('#/artists'));
   $('#nav-songs').classList.toggle('active',   hash.startsWith('#/songs') || hash.startsWith('#/song/'));
 
-  if(hash.startsWith('#/artists')) renderArtists();
-  else if(hash.startsWith('#/songs')) renderSongs();
-  else if(hash.startsWith('#/song/')) {
-    const id = hash.split('/')[2];
-    await ensureLoaded();
-    renderSongPage(id);
-  } else {
-    location.hash = '#/artists';
+  showOverlay(true);
+  try{
+    if(!artists.length && !songs.length) await loadAll();
+
+    if(hash.startsWith('#/artists')) renderArtists();
+    else if(hash.startsWith('#/songs')) renderSongs();
+    else if(hash.startsWith('#/song/')) renderSongPage(hash.split('/')[2]);
+    else location.hash = '#/artists';
+  } finally {
+    showOverlay(false);
   }
 }
-async function ensureLoaded(){
-  if(!artists.length && !songs.length) await loadAll();
-}
 
-/* ========= PAGES ========= */
+/* PAGES */
 function renderArtists(){
   const page = document.createElement('div');
   page.className='card';
   page.innerHTML = `
     <div class="header"><h1>Исполнители</h1></div>
-    <div class="searchRow">
-      <input id="searchArtists" class="search" placeholder="Поиск">
-    </div>
+    <div class="searchRow"><input id="searchArtists" class="search" placeholder="Поиск"></div>
     <div id="alist" class="list"></div>
   `;
   app.innerHTML=''; app.appendChild(page);
 
-  // skeleton
   const alist = page.querySelector('#alist');
-  alist.innerHTML = Array.from({length:3}).map(()=>`
-    <div class="sitem"><div class="a"></div><div class="b" style="flex:1">
-      <div class="skel" style="width:30%"></div><div class="skel" style="width:50%"></div></div></div>`).join('');
+  alist.innerHTML = artists.map(a=>`
+    <div class="item" data-id="${a.id}">
+      <img class="avatar" src="${a.photoUrl||AVATAR_PLACEHOLDER}" onerror="this.src='${AVATAR_PLACEHOLDER}'" alt="">
+      <div class="itext"><div class="ititle">${a.name?escapeHtml(a.name):''}</div><div class="isub">Исполнитель</div></div>
+      <div class="iact" data-edit="${a.id}">Изменить</div>
+    </div>`).join('');
 
-  ensureLoaded().then(()=>{
-    const qEl = page.querySelector('#searchArtists');
-    const render = ()=>{
-      const q=(qEl.value||'').toLowerCase().trim();
-      const data = artists.filter(a=>!q || a.name.toLowerCase().includes(q));
-      if(!data.length){ alist.innerHTML = `<div class="isub" style="padding:18px">Ничего не найдено</div>`; return; }
-      alist.innerHTML = data.map(a=>`
-        <div class="item">
-          <img class="avatar" src="${a.photoUrl||''}" alt="">
-          <div class="itext"><div class="ititle">${esc(a.name)}</div><div class="isub">Исполнитель</div></div>
-          <div class="iact" data-edit="${a.id}">Изменить</div>
-        </div>`).join('');
-      alist.querySelectorAll('[data-edit]').forEach(x=>x.onclick=()=>openArtistEdit(x.dataset.edit));
-    };
-    render();
-    qEl.oninput = render;
+  // клик по строке -> страница песен с фильтром по артисту
+  alist.querySelectorAll('.item').forEach(el=>{
+    el.addEventListener('click', (e)=>{
+      if(e.target.closest('.iact')) return; // не перехватывать "Изменить"
+      location.hash = `#/songs?artist=${encodeURIComponent(el.dataset.id)}`;
+    });
   });
+  // редактирование
+  alist.querySelectorAll('[data-edit]').forEach(x=>x.onclick=(ev)=>{ ev.stopPropagation(); openArtistEdit(x.dataset.edit); });
 
-  // big action button
-  bigbar.innerHTML = `<button class="bigbtn" id="addArtistBig">Добавить исполнителя</button>`;
+  // поиск
+  const qEl = page.querySelector('#searchArtists');
+  qEl.oninput = ()=>{
+    const q=(qEl.value||'').toLowerCase().trim();
+    [...alist.children].forEach(row=>{
+      const a = artists.find(x=>x.id==row.dataset.id); 
+      row.style.display = (!q || a.name.toLowerCase().includes(q)) ? '' : 'none';
+    });
+  };
+
+  // bottom button
+  bigAction.innerHTML = `<button class="bigbtn" id="addArtistBig">Добавить исполнителя</button>`;
   $('#addArtistBig').onclick = openArtistAdd;
 }
 
 function renderSongs(){
+  // вытянем ?artist=… из hash
+  const qHash = location.hash.split('?')[1] || '';
+  const params = new URLSearchParams(qHash);
+  const artistId = params.get('artist');
+
   const page = document.createElement('div');
   page.className='card';
   page.innerHTML = `
     <div class="header"><h1>Песни</h1></div>
-    <div class="searchRow">
-      <input id="searchSongs" class="search" placeholder="Поиск">
-    </div>
+    <div class="searchRow"><input id="searchSongs" class="search" placeholder="Поиск"></div>
     <div id="slist" class="list"></div>
   `;
   app.innerHTML=''; app.appendChild(page);
 
   const slist = page.querySelector('#slist');
-  slist.innerHTML = Array.from({length:3}).map(()=>`
-    <div class="sitem"><div class="a"></div><div class="b" style="flex:1">
-      <div class="skel" style="width:40%"></div><div class="skel" style="width:60%"></div></div></div>`).join('');
+  const qEl = page.querySelector('#searchSongs');
 
-  ensureLoaded().then(()=>{
-    const qEl = page.querySelector('#searchSongs');
-    const render = ()=>{
-      const q=(qEl.value||'').toLowerCase().trim();
-      const data = songs.filter(s=>!q || s.title.toLowerCase().includes(q) || (findArtist(s.artistId)?.name||'').toLowerCase().includes(q));
-      if(!data.length){ slist.innerHTML = `<div class="isub" style="padding:18px">Ничего не найдено</div>`; return; }
-      slist.innerHTML = data.map(s=>{
-        const a = findArtist(s.artistId);
-        return `
-        <div class="item">
-          <img class="avatar" src="${a?.photoUrl||''}" alt="">
-          <div class="itext"><div class="ititle"><a style="text-decoration:none;color:inherit" href="#/song/${s.id}">${esc(s.title)}</a></div><div class="isub">${esc(a?.name||'—')}</div></div>
+  // если пришёл artistId — поставим имя в поиск и отфильтруем
+  if(artistId){
+    const a = artists.find(x=>String(x.id)===String(artistId));
+    if(a){ qEl.value = a.name; }
+  }
+
+  const render = ()=>{
+    const q=(qEl.value||'').toLowerCase().trim();
+    const data = songs.filter(s=>{
+      const a = artists.find(x=>x.id==s.artistId);
+      const inArtist = a && a.name.toLowerCase().includes(q);
+      const inTitle  = s.title.toLowerCase().includes(q);
+      return !q || inArtist || inTitle;
+    });
+    slist.innerHTML = data.map(s=>{
+      const a = artists.find(x=>x.id==s.artistId);
+      const img = a?.photoUrl || AVATAR_PLACEHOLDER;
+      return `
+        <div class="item" data-song="${s.id}">
+          <img class="avatar" src="${img}" onerror="this.src='${AVATAR_PLACEHOLDER}'" alt="">
+          <div class="itext"><div class="ititle"><a style="text-decoration:none;color:inherit" href="#/song/${s.id}">${escapeHtml(s.title)}</a></div><div class="isub">${escapeHtml(a?.name||'—')}</div></div>
           <div class="iact" data-edit="${s.id}">Изменить</div>
         </div>`;
-      }).join('');
-      slist.querySelectorAll('[data-edit]').forEach(x=>x.onclick=()=>openSongEdit(x.dataset.edit));
-    };
-    render();
-    qEl.oninput = render;
-  });
+    }).join('');
+    slist.querySelectorAll('[data-edit]').forEach(x=>x.onclick=(ev)=>{ ev.stopPropagation(); openSongEdit(x.dataset.edit); });
+  };
+  render();
+  qEl.oninput = render;
 
-  bigbar.innerHTML = `<button class="bigbtn" id="addSongBig">Добавить текст песни</button>`;
+  // bottom button (только на списке песен)
+  bigAction.innerHTML = `<button class="bigbtn" id="addSongBig">Добавить текст песни</button>`;
   $('#addSongBig').onclick = openSongAdd;
 }
 
 function renderSongPage(songId){
   const s = songs.find(x=>String(x.id)===String(songId));
-  if(!s){ app.innerHTML = `<div class="isub">Песня не найдена</div>`; return; }
-  const a = findArtist(s.artistId);
+  if(!s){ app.innerHTML = `<div class="isub">Песня не найдена</div>`; bigAction.innerHTML=''; return; }
+  const a = artists.find(x=>String(x.id)===String(s.artistId));
   app.innerHTML = `
     <div class="songCard">
       <div class="shead">
         <div>
-          <div style="font-weight:900;font-size:22px">${esc(s.title)}</div>
-          <div class="smeta">${esc(a?.name||'—')}</div>
+          <div style="font-weight:900;font-size:22px">${escapeHtml(s.title)}</div>
+          <div class="smeta">${escapeHtml(a?.name||'—')}</div>
         </div>
         <a class="btn" href="#/songs">✕</a>
       </div>
@@ -360,8 +380,9 @@ function renderSongPage(songId){
       <div id="lyrics" class="lyrics"></div>
     </div>
   `;
+  // в песне нижнюю зелёную кнопку не показываем
+  bigAction.innerHTML = '';
 
-  // init player controls
   let current = {...s};
   const lyricsEl = $('#lyrics');
   const fontSel = $('#fontSel');
@@ -380,16 +401,13 @@ function renderSongPage(songId){
   fontSel.onchange=renderLyrics;
 }
 
-/* ========= UTILS ========= */
-function findArtist(id){ return artists.find(a=>String(a.id)===String(id)); }
+/* ESC HTML (для имён/текстов в списках) */
+function escapeHtml(s){ return String(s||'').replace(/[&<>"]/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[m])); }
 
-/* ========= OPEN FORMS ========= */
+/* MODALS: open/edit */
 function openArtistAdd(){ openArtistModal(); }
-function openArtistEdit(id){
-  const a=findArtist(id); if(!a) return;
-  openArtistModal(a);
-}
-async function openArtistModal(a=null){
+function openArtistEdit(id){ const a=artists.find(x=>x.id==id); if(!a) return; openArtistModal(a); }
+function openArtistModal(a=null){
   $('#artistModalTitle').textContent = a? 'Изменить исполнителя' : 'Добавить исполнителя';
   $('#aId').value = a?.id || '';
   $('#aName').value = a?.name || '';
@@ -398,12 +416,9 @@ async function openArtistModal(a=null){
   $('#artistModal').showModal();
 }
 function openSongAdd(){ openSongModal(); }
-function openSongEdit(id){
-  const s = songs.find(x=>String(x.id)===String(id)); if(!s) return;
-  openSongModal(s);
-}
+function openSongEdit(id){ const s=songs.find(x=>x.id==id); if(!s) return; openSongModal(s); }
 function refreshArtistSelect(){
-  $('#sArtistSel').innerHTML = `<option value="">— без привязки —</option>` + artists.map(a=>`<option value="${a.id}">${esc(a.name)}</option>`).join('');
+  $('#sArtistSel').innerHTML = `<option value="">— без привязки —</option>` + artists.map(a=>`<option value="${a.id}">${escapeHtml(a.name)}</option>`).join('');
 }
 function openSongModal(s=null){
   $('#songModalTitle').textContent = s? 'Изменить песню' : 'Добавить песню';
@@ -417,11 +432,10 @@ function openSongModal(s=null){
   $('#songModal').showModal();
 }
 
-/* ========= SAVE HANDLERS (с анимацией на кнопке) ========= */
+/* SAVE (с оверлеем) */
 function withBtnSpinner(btn, fn){
-  const label = btn.querySelector('.btnText'); const old = label.textContent;
-  label.textContent = 'Сохранение…'; btn.disabled=true;
-  return fn().finally(()=>{ label.textContent = old; btn.disabled=false; });
+  const t = btn.querySelector('.btnText'); const old = t.textContent; t.textContent='Сохранение…'; btn.disabled=true;
+  return fn().finally(()=>{ t.textContent=old; btn.disabled=false; });
 }
 $('#saveArtist').onclick = ()=> withBtnSpinner($('#saveArtist'), async ()=>{
   const id = $('#aId').value || undefined;
@@ -432,42 +446,37 @@ $('#saveArtist').onclick = ()=> withBtnSpinner($('#saveArtist'), async ()=>{
     const r = await api('upsertArtist', { id, name, bio:$('#aBio').value.trim(), photoData });
     if(!r.ok) throw new Error(r.error||'Ошибка сохранения');
     $('#artistModal').close();
+    artists = []; songs = []; // чтобы перезагрузить
     await loadAll();
     toast(id? 'Изменения сохранены' : 'Исполнитель добавлен');
     route();
   }catch(e){ toast('Ошибка: '+e.message, 3500); }
   finally{ showOverlay(false); }
 });
-
 $('#saveSong').onclick = ()=> withBtnSpinner($('#saveSong'), async ()=>{
   const id = $('#sId').value || undefined;
   const title = $('#sTitle').value.trim(); if(!title){ toast('Название песни обязательно'); return; }
-  const payload = {
-    id, title,
-    artistId: $('#sArtistSel').value || '',
-    key: $('#sKey').value.trim(),
-    tags: $('#sTags').value.trim(),
-    text: $('#sText').value.replace(/\r\n/g,'\n')
-  };
+  const payload = { id, title, artistId: $('#sArtistSel').value || '', key: $('#sKey').value.trim(), tags: $('#sTags').value.trim(), text: $('#sText').value.replace(/\r\n/g,'\n') };
   showOverlay(true);
   try{
     const r = await api('upsertSong', payload);
     if(!r.ok) throw new Error(r.error||'Ошибка сохранения');
     $('#songModal').close();
+    artists = []; songs = [];
     await loadAll();
     toast(id? 'Изменения сохранены' : 'Песня добавлена');
     route();
   }catch(e){ toast('Ошибка: '+e.message, 3500); }
   finally{ showOverlay(false); }
 });
-
 $('#closeArtistModal').onclick = ()=>$('#artistModal').close();
 $('#closeSongModal').onclick   = ()=>$('#songModal').close();
 
-/* ========= INIT ========= */
+/* INIT */
 (async function init(){
-  await loadAll();
-  route();
+  try{ showOverlay(true); await loadAll(); route(); }
+  catch(e){ toast('Ошибка загрузки: '+e.message, 3500); }
+  finally{ showOverlay(false); }
 })();
 </script>
 </body>

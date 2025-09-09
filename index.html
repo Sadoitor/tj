@@ -34,16 +34,17 @@ body{margin:0;background:var(--page);color:var(--text);font:16px/1.6 Inter,syste
 .searchRow{display:flex;gap:10px;align-items:center;padding:12px 18px 18px}
 .search{flex:1;border:1px solid var(--line);background:#fff;border-radius:999px;padding:12px 16px}
 .list{padding:0 18px 18px}
-.item{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.item{display:flex;align-items:center;gap:8px;padding:14px 0;border-bottom:1px solid var(--line);cursor:pointer}
+
 .item:last-child{border-bottom:none}
-.avatar{width:46px;height:46px;border-radius:50%;object-fit:cover;background:#EEF1F4;border:1px solid var(--line)}
+
 .itext{flex:1}
 .ititle{font-weight:800}
 .isub{color:#9AA4B2}
 .iact{color:#7A8595;font-weight:700;cursor:pointer}
 .footer{max-width:1100px;margin:24px auto 28px;padding:0 14px;color:#7a8595;font-size:13px}
 
-/* bottom action bar — внутри контейнера */
+/* bottom action bar */
 .bottomBar{position:sticky;bottom:0;z-index:40}
 .bottomInner{max-width:1100px;margin:0 auto;padding:0 14px}
 .bigbtn{display:block;width:100%;background:var(--brand);color:#fff;border:none;border-radius:16px;padding:16px 18px;font-weight:900;box-shadow:0 16px 38px rgba(4,164,67,.25);margin:12px 0}
@@ -106,7 +107,7 @@ select{border:1px solid var(--line);border-radius:12px;background:#fff;padding:8
 
 <div id="app" class="container"></div>
 
-<!-- bottom action bar (внутри контейнера) -->
+<!-- bottom action bar -->
 <div class="bottomBar"><div class="bottomInner"><div id="bigAction"></div></div></div>
 
 <footer class="footer">
@@ -122,11 +123,7 @@ select{border:1px solid var(--line);border-radius:12px;background:#fff;padding:8
   <div class="dhead"><strong id="artistModalTitle">Исполнитель</strong><button id="closeArtistModal" class="btn">✕</button></div>
   <div class="dbody">
     <input type="hidden" id="aId">
-    <div class="row">
-      <div class="field"><label>Имя</label><input id="aName" placeholder="Напр.: Далер"></div>
-      <div class="field"><label>Фото</label><input id="aPhoto" type="file" accept="image/*"></div>
-    </div>
-    <div class="field"><label>Описание</label><textarea id="aBio" placeholder="Кратко об исполнителе"></textarea></div>
+    <div class="field"><label>Имя</label><input id="aName" placeholder="Напр.: Далер"></div>
     <div style="display:flex;gap:10px;justify-content:end">
       <button id="saveArtist" class="btn btn-accent"><span class="btnText">Сохранить</span></button>
     </div>
@@ -140,10 +137,6 @@ select{border:1px solid var(--line);border-radius:12px;background:#fff;padding:8
     <div class="row">
       <div class="field"><label>Название</label><input id="sTitle" placeholder="Напр.: Сабза ба ноз"></div>
       <div class="field"><label>Исполнитель</label><select id="sArtistSel"></select></div>
-    </div>
-    <div class="row">
-      <div class="field"><label>Тональность</label><input id="sKey" placeholder="Am, G, C#m"></div>
-      <div class="field"><label>Теги</label><input id="sTags" placeholder="жанр, настроение"></div>
     </div>
     <div class="field"><label>Текст (ChordPro)</label><textarea id="sText" placeholder="[Am]пример строки"></textarea></div>
     <div style="display:flex;gap:10px;justify-content:end">
@@ -162,24 +155,24 @@ const app = $('#app'), bigAction = $('#bigAction');
 $('#year').textContent = new Date().getFullYear();
 function showOverlay(v=true){ $('#overlay').style.display = v?'flex':'none'; }
 function toast(msg, ms=2200){ $('#toastMsg').textContent = msg; $('#toast').style.display='block'; setTimeout(()=>$('#toast').style.display='none', ms); }
-function fileToDataURL(f){ return new Promise(res=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.readAsDataURL(f); }); }
 
-/* drive viewer -> direct */
-function driveDirectUrl(u){
-  if(!u) return '';
-  const m = String(u).match(/\/file\/d\/([^/]+)/);
-  const id = m ? m[1] : (/^[A-Za-z0-9_-]{10,}$/.test(u) ? u : null);
-  return id ? `https://drive.google.com/uc?export=view&id=${id}` : u;
-}
-/* placeholder svg (кружок) */
-const AVATAR_PLACEHOLDER = 'data:image/svg+xml;utf8,' + encodeURIComponent(
-  `<svg xmlns="http://www.w3.org/2000/svg" width="92" height="92" viewBox="0 0 92 92">
-    <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#f2f5f8"/><stop offset=".7" stop-color="#e9eef3"/></linearGradient></defs>
+/* Простые аватары-инициалы (чтобы не было фото) */
+function avatarData(name='?'){
+  const t = (name||'?').trim();
+  const initials = t.split(/\s+/).slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
+  const svg = `
+  <svg xmlns="http://www.w3.org/2000/svg" width="92" height="92" viewBox="0 0 92 92">
+    <defs>
+      <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+        <stop stop-color="#ECFDF3"/><stop offset=".7" stop-color="#D7F5E6"/>
+      </linearGradient>
+    </defs>
     <circle cx="46" cy="46" r="46" fill="url(#g)"/>
-    <circle cx="46" cy="34" r="16" fill="#d8e1ea"/>
-    <path d="M18 80a28 28 0 0156 0Z" fill="#d8e1ea"/>
-  </svg>`
-);
+    <text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle"
+      font-family="Inter, Arial, sans-serif" font-size="34" font-weight="800" fill="#0B5D31">${initials}</text>
+  </svg>`;
+  return 'data:image/svg+xml;utf8,'+encodeURIComponent(svg);
+}
 
 /* API */
 async function api(action, payload = {}) {
@@ -213,7 +206,7 @@ function parseChordPro(text){
       if(!part) continue;
       if(part.startsWith('[')&&part.endsWith(']')) pending=part.slice(1,-1).trim();
       else{
-        if(pending){ html+=`<span class="cw"><span class="ch">${part?pending:pending}</span><span class="tx">${part}</span></span>`; pending=null; }
+        if(pending){ html+=`<span class="cw"><span class="ch">${pending}</span><span class="tx">${part}</span></span>`; pending=null; }
         else html+=`<span class="cw"><span class="ch"></span><span class="tx">${part}</span></span>`;
       }
     }
@@ -225,12 +218,9 @@ function parseChordPro(text){
 
 /* DATA */
 async function loadAll(){
-  const cat = await api('catalog');
-  if(!cat.ok) throw new Error(cat.error||'catalog error');
-  // каталог нам не нужен напрямую — запросим списки, где уже нормализовано
   const lists = await api('lists');
-  artists = (lists.artists||[]).map(a=>({ ...a, photoUrl: driveDirectUrl(a.photoUrl||'') }));
-  songs = lists.songs||[];
+  artists = lists.artists||[];
+  songs   = lists.songs||[];
 }
 
 /* ROUTER */
@@ -265,40 +255,39 @@ function renderArtists(){
   app.innerHTML=''; app.appendChild(page);
 
   const alist = page.querySelector('#alist');
-  alist.innerHTML = artists.map(a=>`
-    <div class="item" data-id="${a.id}">
-      <img class="avatar" src="${a.photoUrl||AVATAR_PLACEHOLDER}" onerror="this.src='${AVATAR_PLACEHOLDER}'" alt="">
-      <div class="itext"><div class="ititle">${a.name?escapeHtml(a.name):''}</div><div class="isub">Исполнитель</div></div>
-      <div class="iact" data-edit="${a.id}">Изменить</div>
-    </div>`).join('');
+alist.innerHTML = artists.map(a=>`
+  <div class="item" data-id="${a.id}">
+    <div class="itext">
+      <div class="ititle">${escapeHtml(a.name||'')}</div>
+      <div class="isub">Исполнитель</div>
+    </div>
+    <div class="iact" data-edit="${a.id}">Изменить</div>
+  </div>`).join('');
+
 
   // клик по строке -> страница песен с фильтром по артисту
   alist.querySelectorAll('.item').forEach(el=>{
     el.addEventListener('click', (e)=>{
-      if(e.target.closest('.iact')) return; // не перехватывать "Изменить"
+      if(e.target.closest('.iact')) return;
       location.hash = `#/songs?artist=${encodeURIComponent(el.dataset.id)}`;
     });
   });
-  // редактирование
   alist.querySelectorAll('[data-edit]').forEach(x=>x.onclick=(ev)=>{ ev.stopPropagation(); openArtistEdit(x.dataset.edit); });
 
-  // поиск
   const qEl = page.querySelector('#searchArtists');
   qEl.oninput = ()=>{
     const q=(qEl.value||'').toLowerCase().trim();
     [...alist.children].forEach(row=>{
-      const a = artists.find(x=>x.id==row.dataset.id); 
+      const a = artists.find(x=>x.id==row.dataset.id);
       row.style.display = (!q || a.name.toLowerCase().includes(q)) ? '' : 'none';
     });
   };
 
-  // bottom button
   bigAction.innerHTML = `<button class="bigbtn" id="addArtistBig">Добавить исполнителя</button>`;
   $('#addArtistBig').onclick = openArtistAdd;
 }
 
 function renderSongs(){
-  // вытянем ?artist=… из hash
   const qHash = location.hash.split('?')[1] || '';
   const params = new URLSearchParams(qHash);
   const artistId = params.get('artist');
@@ -315,7 +304,6 @@ function renderSongs(){
   const slist = page.querySelector('#slist');
   const qEl = page.querySelector('#searchSongs');
 
-  // если пришёл artistId — поставим имя в поиск и отфильтруем
   if(artistId){
     const a = artists.find(x=>String(x.id)===String(artistId));
     if(a){ qEl.value = a.name; }
@@ -329,22 +317,25 @@ function renderSongs(){
       const inTitle  = s.title.toLowerCase().includes(q);
       return !q || inArtist || inTitle;
     });
-    slist.innerHTML = data.map(s=>{
-      const a = artists.find(x=>x.id==s.artistId);
-      const img = a?.photoUrl || AVATAR_PLACEHOLDER;
-      return `
-        <div class="item" data-song="${s.id}">
-          <img class="avatar" src="${img}" onerror="this.src='${AVATAR_PLACEHOLDER}'" alt="">
-          <div class="itext"><div class="ititle"><a style="text-decoration:none;color:inherit" href="#/song/${s.id}">${escapeHtml(s.title)}</a></div><div class="isub">${escapeHtml(a?.name||'—')}</div></div>
-          <div class="iact" data-edit="${s.id}">Изменить</div>
-        </div>`;
-    }).join('');
+slist.innerHTML = data.map(s=>{
+  const a = artists.find(x=>x.id==s.artistId);
+  return `
+    <div class="item" data-song="${s.id}">
+      <div class="itext">
+        <div class="ititle">
+          <a style="text-decoration:none;color:inherit" href="#/song/${s.id}">${escapeHtml(s.title)}</a>
+        </div>
+        <div class="isub">${escapeHtml(a?.name||'—')}</div>
+      </div>
+      <div class="iact" data-edit="${s.id}">Изменить</div>
+    </div>`;
+}).join('');
+
     slist.querySelectorAll('[data-edit]').forEach(x=>x.onclick=(ev)=>{ ev.stopPropagation(); openSongEdit(x.dataset.edit); });
   };
   render();
   qEl.oninput = render;
 
-  // bottom button (только на списке песен)
   bigAction.innerHTML = `<button class="bigbtn" id="addSongBig">Добавить текст песни</button>`;
   $('#addSongBig').onclick = openSongAdd;
 }
@@ -380,7 +371,6 @@ function renderSongPage(songId){
       <div id="lyrics" class="lyrics"></div>
     </div>
   `;
-  // в песне нижнюю зелёную кнопку не показываем
   bigAction.innerHTML = '';
 
   let current = {...s};
@@ -401,18 +391,16 @@ function renderSongPage(songId){
   fontSel.onchange=renderLyrics;
 }
 
-/* ESC HTML (для имён/текстов в списках) */
+/* ESC HTML */
 function escapeHtml(s){ return String(s||'').replace(/[&<>"]/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[m])); }
 
-/* MODALS: open/edit */
+/* MODALS */
 function openArtistAdd(){ openArtistModal(); }
 function openArtistEdit(id){ const a=artists.find(x=>x.id==id); if(!a) return; openArtistModal(a); }
 function openArtistModal(a=null){
   $('#artistModalTitle').textContent = a? 'Изменить исполнителя' : 'Добавить исполнителя';
   $('#aId').value = a?.id || '';
   $('#aName').value = a?.name || '';
-  $('#aBio').value = a?.bio || '';
-  $('#aPhoto').value = '';
   $('#artistModal').showModal();
 }
 function openSongAdd(){ openSongModal(); }
@@ -426,13 +414,11 @@ function openSongModal(s=null){
   $('#sTitle').value = s?.title || '';
   refreshArtistSelect();
   $('#sArtistSel').value = s?.artistId || '';
-  $('#sKey').value = s?.key || '';
-  $('#sTags').value = s?.tags || '';
   $('#sText').value = s?.text || '';
   $('#songModal').showModal();
 }
 
-/* SAVE (с оверлеем) */
+/* SAVE */
 function withBtnSpinner(btn, fn){
   const t = btn.querySelector('.btnText'); const old = t.textContent; t.textContent='Сохранение…'; btn.disabled=true;
   return fn().finally(()=>{ t.textContent=old; btn.disabled=false; });
@@ -440,32 +426,27 @@ function withBtnSpinner(btn, fn){
 $('#saveArtist').onclick = ()=> withBtnSpinner($('#saveArtist'), async ()=>{
   const id = $('#aId').value || undefined;
   const name = $('#aName').value.trim(); if(!name){ toast('Имя исполнителя обязательно'); return; }
-  let photoData=''; const f=$('#aPhoto').files?.[0]; if(f) photoData = await fileToDataURL(f);
   showOverlay(true);
   try{
-    const r = await api('upsertArtist', { id, name, bio:$('#aBio').value.trim(), photoData });
+    const r = await api('upsertArtist', { id, name }); // только имя
     if(!r.ok) throw new Error(r.error||'Ошибка сохранения');
     $('#artistModal').close();
-    artists = []; songs = []; // чтобы перезагрузить
-    await loadAll();
-    toast(id? 'Изменения сохранены' : 'Исполнитель добавлен');
-    route();
+    artists = []; songs = [];
+    await loadAll(); toast(id? 'Изменения сохранены' : 'Исполнитель добавлен'); route();
   }catch(e){ toast('Ошибка: '+e.message, 3500); }
   finally{ showOverlay(false); }
 });
 $('#saveSong').onclick = ()=> withBtnSpinner($('#saveSong'), async ()=>{
   const id = $('#sId').value || undefined;
   const title = $('#sTitle').value.trim(); if(!title){ toast('Название песни обязательно'); return; }
-  const payload = { id, title, artistId: $('#sArtistSel').value || '', key: $('#sKey').value.trim(), tags: $('#sTags').value.trim(), text: $('#sText').value.replace(/\r\n/g,'\n') };
+  const payload = { id, title, artistId: $('#sArtistSel').value || '', text: $('#sText').value.replace(/\r\n/g,'\n') }; // только title/artistId/text
   showOverlay(true);
   try{
     const r = await api('upsertSong', payload);
     if(!r.ok) throw new Error(r.error||'Ошибка сохранения');
     $('#songModal').close();
     artists = []; songs = [];
-    await loadAll();
-    toast(id? 'Изменения сохранены' : 'Песня добавлена');
-    route();
+    await loadAll(); toast(id? 'Изменения сохранены' : 'Песня добавлена'); route();
   }catch(e){ toast('Ошибка: '+e.message, 3500); }
   finally{ showOverlay(false); }
 });

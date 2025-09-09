@@ -3,254 +3,191 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Sadoitor — песенник с аккордами</title>
+<title>Sadoitor</title>
 <meta name="color-scheme" content="light">
 <style>
-  :root{
-    --brand:#04A443;   /* зелёный */
-    --accent:#F3C432;  /* жёлтый */
-    --bg:#F8FAF9;
-    --panel:#ffffff;
-    --text:#0F172A;
-    --muted:#5B6472;
-    --line:#E9EEF0;
-    --radius:18px;
-    --shadow:0 12px 28px rgba(2,8,23,.06), 0 2px 10px rgba(2,8,23,.04);
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{margin:0;background:var(--bg);color:var(--text);
-       font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+/* ============ THEME ============ */
+:root{
+  --brand:#04A443; --accent:#F3C432;
+  --page:#F6F8FA; --panel:#fff; --text:#0F172A; --muted:#667085; --line:#E9EEF0;
+  --radius:18px; --shadow:0 12px 32px rgba(15,23,42,.08), 0 2px 10px rgba(15,23,42,.04);
+  --ring:rgba(4,164,67,.3);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text);font:16px/1.6 Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 
-  /* ======= ЧЁРНАЯ ШАПКА ======= */
-  header{
-    position:sticky;top:0;z-index:30;
-    background:#000;color:#fff;border-bottom:1px solid #111;
-    padding:10px 14px calc(10px + env(safe-area-inset-top));
-  }
-  .head{max-width:1100px;margin:0 auto;display:flex;gap:12px;align-items:center}
-  .logo{width:36px;height:36px;border-radius:8px;overflow:hidden;flex:0 0 auto;background:#111;display:grid;place-items:center}
-  .logo img{width:100%;height:100%;object-fit:contain}
-  .title{font-weight:900;letter-spacing:.2px}
-  .spacer{flex:1}
-  .iconbtn{
-    appearance:none;border:1px solid #222;background:#0b0b0b;color:#fff;
-    width:38px;height:38px;border-radius:12px;display:grid;place-items:center;cursor:pointer
-  }
+/* ============ APP BAR ============ */
+.appbar{position:sticky;top:0;z-index:50;background:#000;border-bottom:1px solid #121212}
+.appbar .in{max-width:1100px;margin:0 auto;padding:12px 14px;display:flex;align-items:center;gap:14px}
+.logo{width:34px;height:34px;border-radius:10px;overflow:hidden;background:#0f0f0f}
+.logo img{width:100%;height:100%;object-fit:contain}
+.brand{color:#fff;font-weight:900;letter-spacing:.2px}
+.nav{margin-left:auto;display:flex;gap:18px}
+.nav a{color:#fff;text-decoration:none;font-weight:800;opacity:.7;padding:8px 0;position:relative}
+.nav a.active,.nav a:hover{opacity:1}
+.nav a.active::after{content:"";position:absolute;left:0;right:0;bottom:-10px;height:3px;border-radius:3px;background:#fff}
 
-  /* ======= НИЖНИЕ ТАБЫ ======= */
-  .tabs{
-    position:sticky;bottom:0;z-index:25;inset-inline:0;display:flex;gap:8px;
-    padding:10px 14px calc(12px + env(safe-area-inset-bottom));
-    background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-top:1px solid var(--line)
-  }
-  .tab{flex:1;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 12px;
-       display:flex;gap:8px;align-items:center;justify-content:center;font-weight:700;cursor:pointer}
-  .tab.active{border-color:var(--brand);box-shadow:0 8px 18px rgba(4,164,67,.18)}
+/* ============ LAYOUT ============ */
+.container{max-width:1100px;margin:18px auto;padding:0 14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
+.header{display:flex;align-items:center;gap:14px;padding:18px 18px 0}
+.header h1{margin:0;font-size:26px}
+.searchRow{display:flex;gap:10px;align-items:center;padding:12px 18px 18px}
+.search{flex:1;border:1px solid var(--line);background:#fff;border-radius:999px;padding:12px 16px}
+.list{padding:0 18px 18px}
+.item{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.item:last-child{border-bottom:none}
+.avatar{width:46px;height:46px;border-radius:50%;object-fit:cover;background:#EEF1F4;border:1px solid var(--line)}
+.itext{flex:1}
+.ititle{font-weight:800}
+.isub{color:#9AA4B2}
+.iact{color:#7A8595;font-weight:700;cursor:pointer}
+.footer{max-width:1100px;margin:24px auto 28px;padding:0 14px;color:#7a8595;font-size:13px}
+.bigbar{position:sticky;bottom:18px;z-index:40}
+.bigbtn{display:block;width:100%;max-width:1100px;margin:12px auto 0;background:var(--brand);color:#fff;border:none;border-radius:16px;padding:16px 18px;font-weight:900;box-shadow:0 16px 38px rgba(4,164,67,.25)}
+.bigbtn:active{transform:translateY(1px)}
 
-  /* ======= ОБЩЕЕ ======= */
-  main{padding:12px 14px 96px}
-  .wrap{max-width:1100px;margin:0 auto}
-  .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
-  .tools{display:flex;gap:8px;align-items:center;padding:12px}
-  .search{flex:1;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px}
-  .btn{font:inherit;border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;cursor:pointer}
-  .primary{background:var(--brand);color:#fff;border:none}
-  .accent{background:var(--accent);color:#352600;border:none}
+/* ============ DIALOGS ============ */
+dialog{border:none;border-radius:22px;width:min(880px,96vw);padding:0;box-shadow:0 28px 70px rgba(2,8,23,.45)}
+dialog::backdrop{background:rgba(2,8,23,.5);backdrop-filter:blur(2px)}
+.dhead{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--line);background:#fff;border-top-left-radius:22px;border-top-right-radius:22px}
+.dbody{padding:14px;background:#fff;border-bottom-left-radius:22px;border-bottom-right-radius:22px}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.field input,.field textarea,.field select{border:1px solid var(--line);border-radius:12px;padding:12px 12px;background:#fff;outline:none}
+.field input:focus,.field textarea:focus,.field select:focus{box-shadow:0 0 0 4px var(--ring)}
+.row{display:grid;gap:10px}
+@media(min-width:680px){ .row{grid-template-columns:1fr 1fr} }
+.btn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;cursor:pointer;font-weight:700}
+.btn-primary{background:var(--brand);border:none;color:#fff}
+.btn-accent{background:var(--accent);border:none;color:#2b2000}
 
-  /* ======= КАТАЛОГ (стартовая) ======= */
-  .artists{padding:12px}
-  .alist{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  @media (min-width:740px){ .alist{grid-template-columns:repeat(3,1fr)} }
-  @media (min-width:1024px){ .alist{grid-template-columns:repeat(4,1fr)} }
-  .card{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
-  .ph{aspect-ratio:1/1;object-fit:cover;width:100%}
-  .cbody{padding:10px}
-  .cname{font-weight:800}
-  .cbio{font-size:13px;color:var(--muted);margin-top:4px}
-  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-  .chip{font-size:12px;padding:4px 8px;border-radius:999px;background:#ECFDF3;color:#065F2B;border:1px solid #DDF5E7;cursor:pointer}
+/* ============ PLAYER PAGE ============ */
+.songCard{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:18px}
+.shead{display:flex;align-items:center;justify-content:space-between}
+.smeta{color:#7a8595;font-weight:700}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:14px 0}
+.ghost{background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 12px}
+select{border:1px solid var(--line);border-radius:12px;background:#fff;padding:8px 12px;min-width:120px}
+.lyrics{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap}
+.line{display:block;margin:2px 0}
+.cw{display:inline-grid;grid-template-rows:auto 1.25em;align-items:end;min-width:.25em;margin-right:.03em}
+.cw .ch{font-weight:800;font-size:.86em;line-height:1;color:#0A6A7A}
+.cw .tx{line-height:1.25}
 
-  /* ======= УПРАВЛЕНИЕ «АВТОРЫ/ПЕСНИ» ======= */
-  .manage{display:grid;gap:12px;padding:12px}
-  .hstack{display:flex;gap:8px;flex-wrap:wrap}
-  .list{display:flex;flex-direction:column}
-  .row{display:flex;gap:10px;align-items:center;padding:10px;border-top:1px solid var(--line)}
-  .row:first-child{border-top:none}
-  .av{width:42px;height:42px;border-radius:12px;background:#ECFDF3;display:grid;place-items:center;
-      color:var(--brand);font-weight:900;border:1px solid #DDF5E7}
+/* ============ LOADERS ============ */
+.overlay{position:fixed;inset:0;background:rgba(255,255,255,.45);backdrop-filter:blur(1.6px);display:none;align-items:center;justify-content:center;z-index:60}
+.spinner{width:54px;height:54px;border:6px solid #e9eef0;border-top-color:var(--brand);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.skel{height:18px;background:linear-gradient(90deg,#eef2f6,#f7fafc,#eef2f6);background-size:200% 100%;animation:s 1.4s linear infinite;border-radius:8px}
+@keyframes s{0%{background-position:0 0}100%{background-position:200% 0}}
+.sitem{display:flex;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.sitem .a{width:46px;height:46px;border-radius:50%;background:#eef2f6}
+.sitem .b{flex:1}
+.sitem .b .skel{margin:6px 0}
 
-  /* ======= ПЛЕЕР ПЕСНИ ======= */
-  .player{padding:14px}
-  .player h1{margin:2px 0 2px;font-size:22px}
-  .player h2{margin:0;color:var(--muted);font-size:13px;font-weight:700}
-  .bar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 12px;align-items:center}
-  select{border:1px solid var(--line);border-radius:10px;background:#fff;padding:8px 10px;min-width:120px}
-  .ghost{background:transparent;border:1px solid var(--line);border-radius:10px;padding:8px 10px}
-  .lyrics{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap}
-  .line{display:block;margin:2px 0} /* компактнее */
-  .cw{display:inline-grid;grid-template-rows:auto 1.25em;align-items:end;min-width:.25em;margin-right:.03em}
-  .cw .ch{font-weight:800;font-size:.86em;line-height:1;color:#0A6A7A}
-  .cw .tx{line-height:1.25}
-
-  /* ======= ДИАЛОГИ ======= */
-  dialog{border:none;border-radius:20px;width:min(920px,96vw);padding:0;box-shadow:0 28px 60px rgba(2,8,23,.35)}
-  dialog::backdrop{background:rgba(2,8,23,.45);backdrop-filter:blur(2px)}
-  .mhead{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--line)}
-  .mbody{display:grid;gap:12px;padding:12px}
-  .field{display:flex;flex-direction:column;gap:6px}
-  .field input,.field textarea,.field select{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff;width:100%}
-  textarea{min-height:220px;font-family:ui-monospace,Menlo,Consolas,monospace}
-  .help{background:#FEFFF5;border:1px dashed #F6F1C5;border-radius:12px;padding:10px 12px;font-size:13px;color:#6B5E00}
-
-  /* Печать */
-  @media print{
-    header,.tabs,.bar .ghost,.manage,.artists,.tools{display:none!important}
-    body{background:#fff}
-    .player{border:none;box-shadow:none}
-    .player h1{font-size:20px}
-  }
+/* ============ TOAST ============ */
+.toast{position:fixed;left:50%;transform:translateX(-50%);top:14px;z-index:70;display:none}
+.toast .msg{background:#0b0b0b;color:#fff;border:1px solid #222;padding:12px 16px;border-radius:12px;box-shadow:0 16px 45px rgba(0,0,0,.35)}
 </style>
 </head>
 <body>
 
-<!-- ===== ШАПКА ===== -->
-<header>
-  <div class="head">
-    <div class="logo"><img src="https://i.postimg.cc/NFrYFn0x/112.png" alt="Sadoitor logo"></div>
-    <div class="title">Sadoitor</div>
-    <div class="spacer"></div>
-    <button class="iconbtn" id="exportBtn" title="Экспорт JSON">⤓</button>
-    <label>
-      <input id="importFile" type="file" accept=".json" hidden>
-      <button class="iconbtn" id="importBtn" title="Импорт JSON">⤒</button>
-    </label>
+<!-- ============ HEADER ============ -->
+<div class="appbar">
+  <div class="in">
+    <div class="logo"><img src="https://i.postimg.cc/NFrYFn0x/112.png" alt=""></div>
+    <div class="brand">Sadoitor</div>
+    <nav class="nav">
+      <a href="#/artists" id="nav-artists">Исполнители</a>
+      <a href="#/songs"   id="nav-songs">Песни</a>
+    </nav>
   </div>
-</header>
+</div>
 
-<main class="wrap">
+<div id="app" class="container"></div>
 
-  <!-- ===== КАТАЛОГ (старт) ===== -->
-  <section id="catalogSect" class="panel">
-    <div class="tools">
-      <input id="catSearch" class="search" type="search" placeholder="Поиск по исполнителям и песням…">
-      <button id="openManage" class="btn">Авторы/Песни</button>
-    </div>
-    <div class="artists">
-      <div class="alist" id="alist"></div>
-    </div>
-  </section>
+<div class="bigbar" id="bigbar"></div>
 
-  <!-- ===== ПЛЕЕР ПЕСНИ (открывается после клика) ===== -->
-  <section id="playerSect" class="panel player" hidden>
-    <h1 id="pTitle">—</h1>
-    <h2 id="pArtist"></h2>
-    <div class="bar">
-      <button id="scrollToggle" class="btn accent">Авто-прокрутка ▷</button>
-      <label class="meta">Скорость <input id="scrollSpeed" type="range" min="10" max="120" value="50" style="vertical-align:middle"></label>
-      <button id="tDown" class="ghost">Трансп. −</button>
-      <button id="tUp" class="ghost">Трансп. +</button>
-      <select id="fontSel">
-        <option value="15">Шрифт 15</option>
-        <option value="16" selected>Шрифт 16</option>
-        <option value="18">Шрифт 18</option>
-        <option value="20">Шрифт 20</option>
-        <option value="22">Шрифт 22</option>
-      </select>
-      <div class="spacer"></div>
-      <button id="printBtn" class="btn">Печать</button>
-    </div>
-    <div id="lyrics" class="lyrics"></div>
-  </section>
+<footer class="footer">
+  © <span id="year"></span> Sadoitor • Сделано с любовью к музыке • Цвета бренда: #04A443 и #F3C432
+</footer>
 
-  <!-- ===== УПРАВЛЕНИЕ «АВТОРЫ/ПЕСНИ» ===== -->
-  <section id="manageSect" class="panel" hidden>
-    <div class="manage">
-      <div class="hstack">
-        <input id="mSearch" class="search" type="search" placeholder="Фильтр по именам/песням…">
-        <button id="addArtistBtn" class="btn accent">Добавить исполнителя</button>
-        <button id="addSongBtn" class="btn primary">Добавить песню</button>
-        <button id="backToCatalog" class="btn">← Каталог</button>
-      </div>
+<!-- ===== Overlay loader / Toast ===== -->
+<div id="overlay" class="overlay"><div class="spinner"></div></div>
+<div id="toast" class="toast"><div class="msg" id="toastMsg"></div></div>
 
-      <h3>Исполнители</h3>
-      <div id="mArtists" class="list"></div>
-
-      <h3>Песни</h3>
-      <div id="mSongs" class="list"></div>
-    </div>
-  </section>
-
-</main>
-
-<!-- ===== ТАБЫ НИЗА: старт на «Каталог» ===== -->
-<nav class="tabs">
-  <div id="tabCatalog" class="tab active">Каталог</div>
-  <div id="tabPlayer" class="tab">Плеер</div>
-  <div id="tabManage" class="tab">Авторы/Песни</div>
-</nav>
-
-<!-- ===== Диалог: исполнитель ===== -->
+<!-- ===== Modals: Artist & Song (add/edit) ===== -->
 <dialog id="artistModal">
-  <div class="mhead"><strong>Исполнитель</strong><button id="closeArtistModal" class="btn">✕</button></div>
-  <div class="mbody">
-    <div class="field"><label>Имя</label><input id="aName" placeholder="Напр.: Шабнами Собири"></div>
-    <div class="field"><label>Описание (био)</label><textarea id="aBio" placeholder="Кратко об исполнителе"></textarea></div>
-    <div class="field">
-      <label>Фотография</label>
-      <input id="aPhoto" type="file" accept="image/*">
-      <div class="help">Фото сохраняется локально (base64).</div>
+  <div class="dhead"><strong id="artistModalTitle">Исполнитель</strong><button id="closeArtistModal" class="btn">✕</button></div>
+  <div class="dbody">
+    <input type="hidden" id="aId">
+    <div class="row">
+      <div class="field"><label>Имя</label><input id="aName" placeholder="Напр.: Далер"></div>
+      <div class="field"><label>Фото</label><input id="aPhoto" type="file" accept="image/*"></div>
     </div>
-    <div class="hstack" style="justify-content:end">
-      <button id="saveArtist" class="btn accent">Сохранить</button>
+    <div class="field"><label>Описание</label><textarea id="aBio" placeholder="Кратко об исполнителе"></textarea></div>
+    <div style="display:flex;gap:10px;justify-content:end">
+      <button id="saveArtist" class="btn btn-accent"><span class="btnText">Сохранить</span></button>
     </div>
   </div>
 </dialog>
 
-<!-- ===== Диалог: песня ===== -->
 <dialog id="songModal">
-  <div class="mhead"><strong>Песня</strong><button id="closeSongModal" class="btn">✕</button></div>
-  <div class="mbody">
-    <div class="field"><label>Название</label><input id="sTitle" placeholder="Напр.: Кукушка"></div>
-    <div class="field">
-      <label>Исполнитель</label>
-      <select id="sArtistSel"></select>
+  <div class="dhead"><strong id="songModalTitle">Песня</strong><button id="closeSongModal" class="btn">✕</button></div>
+  <div class="dbody">
+    <input type="hidden" id="sId">
+    <div class="row">
+      <div class="field"><label>Название</label><input id="sTitle" placeholder="Напр.: Сабза ба ноз"></div>
+      <div class="field"><label>Исполнитель</label><select id="sArtistSel"></select></div>
     </div>
-    <div class="field"><label>Тональность</label><input id="sKey" placeholder="Am, G, C#m…"></div>
-    <div class="field"><label>Теги</label><input id="sTags" placeholder="рок, кавер"></div>
-    <div class="help">Используйте формат <code>[Am]Текст</code>. Пример: <code>[Am]Ветер несёт [E]пламя</code>.</div>
-    <div class="field"><label>Текст (ChordPro)</label><textarea id="sText" placeholder="[Am]Пример строки"></textarea></div>
-    <div class="hstack" style="justify-content:end">
-      <button id="saveSong" class="btn primary">Сохранить</button>
+    <div class="row">
+      <div class="field"><label>Тональность</label><input id="sKey" placeholder="Am, G, C#m"></div>
+      <div class="field"><label>Теги</label><input id="sTags" placeholder="жанр, настроение"></div>
+    </div>
+    <div class="field"><label>Текст (ChordPro)</label><textarea id="sText" placeholder="[Am]пример строки"></textarea></div>
+    <div style="display:flex;gap:10px;justify-content:end">
+      <button id="saveSong" class="btn btn-primary"><span class="btnText">Сохранить</span></button>
     </div>
   </div>
 </dialog>
 
 <script>
-/* ===== STORAGE ===== */
-const LS_SONGS='sadoitor_songs_v1';
-const LS_ARTS='sadoitor_artists_v1';
-let songs = load(LS_SONGS, []);
-let artists = load(LS_ARTS, []);
-let currentSongId = null;
+/* ========= CONFIG ========= */
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbytGKdN1Tza3-zEOWBgOA2W8DqmfNGH5I-dW-HtChEAigWdPOxe1rTaFgSIbDzRbgmStg/exec';  // <-- URL Apps Script (…/exec)
 
-function load(k, fb){ try{ return JSON.parse(localStorage.getItem(k))||fb }catch{ return fb } }
-function save(){ localStorage.setItem(LS_SONGS, JSON.stringify(songs)); localStorage.setItem(LS_ARTS, JSON.stringify(artists)); }
+/* ========= HELPERS ========= */
+const $ = s => document.querySelector(s);
+const app = $('#app'), bigbar = $('#bigbar');
+$('#year').textContent = new Date().getFullYear();
 
-/* ===== CHORDS ===== */
+function showOverlay(v=true){ $('#overlay').style.display = v?'flex':'none'; }
+function toast(msg, ms=2200){ $('#toastMsg').textContent = msg; $('#toast').style.display='block'; setTimeout(()=>$('#toast').style.display='none', ms); }
+function esc(s){return (s||'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function fileToDataURL(f){ return new Promise(res=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.readAsDataURL(f); }); }
+
+/* ========= API (GET/POST) ========= */
+async function api(action, payload = {}) {
+  const isGet = action === 'catalog' || action === 'lists';
+  const qp = action === 'catalog' ? '?action=catalog' : action === 'lists' ? '?action=lists' : '';
+  const res = await fetch(WEB_APP_URL + qp, {
+    method: isGet ? 'GET' : 'POST',
+    headers: isGet ? {} : { 'Content-Type':'text/plain;charset=utf-8' },
+    body: isGet ? undefined : JSON.stringify({ action, ...payload })
+  });
+  const text = await res.text();
+  try { return JSON.parse(text); } catch { throw new Error(text || 'Server returned non-JSON'); }
+}
+
+/* ========= STATE ========= */
+let artists = [];  // {id,name,bio,photoUrl}
+let songs = [];    // {id,title,artistId,key,tags,text}
+let catalog = [];  // artists + songs grouped (для удобства рендера)
+
+/* ========= CHORDS ========= */
 const SHARP=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 const FLAT =['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
 const useSharp = ch=>/#/.test(ch);
-function esc(s){return s.replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
-function tChord(ch,steps){
-  const m=ch.match(/^([A-G](?:#|b)?)(.*)$/); if(!m) return ch;
-  const root=m[1], rest=m[2]||''; const seq=useSharp(root)?SHARP:FLAT;
-  let i=SHARP.indexOf(root); if(i<0) i=FLAT.indexOf(root); if(i<0) return ch;
-  let ni=(i+steps)%12; if(ni<0) ni+=12; let out=seq[ni];
-  const sl=rest.match(/^(.*?)(\/)([A-G](?:#|b)?)$/);
-  if(sl){ let bi=SHARP.indexOf(sl[3]); if(bi<0) bi=FLAT.indexOf(sl[3]); if(bi>=0){ let bni=(bi+steps)%12; if(bni<0) bni+=12; return out+sl[1]+sl[2]+seq[bni]; } }
-  return out+rest;
-}
+function tChord(ch,steps){const m=ch.match(/^([A-G](?:#|b)?)(.*)$/); if(!m) return ch; const root=m[1], rest=m[2]||''; const seq=useSharp(root)?SHARP:FLAT; let i=SHARP.indexOf(root); if(i<0) i=FLAT.indexOf(root); if(i<0) return ch; let ni=(i+steps)%12; if(ni<0) ni+=12; let out=seq[ni]; const sl=rest.match(/^(.*?)(\/)([A-G](?:#|b)?)$/); if(sl){ let bi=SHARP.indexOf(sl[3]); if(bi<0) bi=FLAT.indexOf(sl[3]); if(bi>=0){ let bni=(bi+steps)%12; if(bni<0) bni+=12; return out+sl[1]+sl[2]+seq[bni]; } } return out+rest; }
 function tText(txt,steps){ return (txt||'').replace(/\[([^\]]+)\]/g,(_,c)=>`[${tChord(c.trim(),steps)}]`) }
 function parseChordPro(text){
   const lines=(text||'').split(/\r?\n/); const out=[];
@@ -271,238 +208,267 @@ function parseChordPro(text){
   return out.join('\n');
 }
 
-/* ===== ELEMENTS ===== */
-const catalogSect=document.getElementById('catalogSect');
-const playerSect =document.getElementById('playerSect');
-const manageSect =document.getElementById('manageSect');
-const tabCatalog =document.getElementById('tabCatalog');
-const tabPlayer  =document.getElementById('tabPlayer');
-const tabManage  =document.getElementById('tabManage');
+/* ========= DATA FLOW ========= */
+async function loadAll(){
+  showOverlay(true);
+  try{
+    const cat = await api('catalog');
+    if(!cat.ok) throw new Error(cat.error||'catalog error');
+    catalog = cat.data||[];
 
-function showCatalog(){ catalogSect.hidden=false; playerSect.hidden=true; manageSect.hidden=true; setActive(tabCatalog) }
-function showPlayer(){ catalogSect.hidden=true;  playerSect.hidden=false; manageSect.hidden=true; setActive(tabPlayer) }
-function showManage(){ catalogSect.hidden=true;  playerSect.hidden=true;  manageSect.hidden=false; setActive(tabManage) }
-function setActive(el){ [tabCatalog,tabPlayer,tabManage].forEach(x=>x.classList.remove('active')); el.classList.add('active'); }
-tabCatalog.onclick=showCatalog; tabPlayer.onclick=showPlayer; tabManage.onclick=showManage;
-document.getElementById('openManage').onclick = showManage;
-document.getElementById('backToCatalog').onclick = showCatalog;
+    const lists = await api('lists');
+    artists = lists.artists||[]; songs = lists.songs||[];
+  }finally{
+    showOverlay(false);
+  }
+}
 
-/* ===== CATALOG RENDER ===== */
-const alist=document.getElementById('alist');
-const catSearch=document.getElementById('catSearch');
-function artistName(id){const a=artists.find(x=>x.id===id);return a?a.name:''}
-function renderCatalog(){
-  const q=(catSearch.value||'').toLowerCase().trim();
-  const arr=artists
-    .map(a=>({...a, songs:songs.filter(s=>s.artistId===a.id)}))
-    .filter(a=>!q || a.name.toLowerCase().includes(q) || a.songs.some(s=>s.title.toLowerCase().includes(q)));
-  alist.innerHTML='';
-  if(arr.length===0){ alist.innerHTML='<div class="cbio">Ничего не найдено. Нажмите «Авторы/Песни» чтобы добавить.</div>'; return;}
-  for(const a of arr){
-    const card=document.createElement('div'); card.className='card';
-    card.innerHTML=`
-      <img class="ph" src="${a.photo||''}" alt="">
-      <div class="cbody">
-        <div class="cname">${esc(a.name)}</div>
-        <div class="cbio">${esc(a.bio||'')}</div>
-        <div class="chips">
-          ${a.songs.map(s=>`<span class="chip" data-id="${s.id}">${esc(s.title)}</span>`).join('')}
+/* ========= ROUTER ========= */
+window.addEventListener('hashchange', route);
+async function route(){
+  // активная вкладка
+  const hash = location.hash || '#/artists';
+  $('#nav-artists').classList.toggle('active', hash.startsWith('#/artists'));
+  $('#nav-songs').classList.toggle('active',   hash.startsWith('#/songs') || hash.startsWith('#/song/'));
+
+  if(hash.startsWith('#/artists')) renderArtists();
+  else if(hash.startsWith('#/songs')) renderSongs();
+  else if(hash.startsWith('#/song/')) {
+    const id = hash.split('/')[2];
+    await ensureLoaded();
+    renderSongPage(id);
+  } else {
+    location.hash = '#/artists';
+  }
+}
+async function ensureLoaded(){
+  if(!artists.length && !songs.length) await loadAll();
+}
+
+/* ========= PAGES ========= */
+function renderArtists(){
+  const page = document.createElement('div');
+  page.className='card';
+  page.innerHTML = `
+    <div class="header"><h1>Исполнители</h1></div>
+    <div class="searchRow">
+      <input id="searchArtists" class="search" placeholder="Поиск">
+    </div>
+    <div id="alist" class="list"></div>
+  `;
+  app.innerHTML=''; app.appendChild(page);
+
+  // skeleton
+  const alist = page.querySelector('#alist');
+  alist.innerHTML = Array.from({length:3}).map(()=>`
+    <div class="sitem"><div class="a"></div><div class="b" style="flex:1">
+      <div class="skel" style="width:30%"></div><div class="skel" style="width:50%"></div></div></div>`).join('');
+
+  ensureLoaded().then(()=>{
+    const qEl = page.querySelector('#searchArtists');
+    const render = ()=>{
+      const q=(qEl.value||'').toLowerCase().trim();
+      const data = artists.filter(a=>!q || a.name.toLowerCase().includes(q));
+      if(!data.length){ alist.innerHTML = `<div class="isub" style="padding:18px">Ничего не найдено</div>`; return; }
+      alist.innerHTML = data.map(a=>`
+        <div class="item">
+          <img class="avatar" src="${a.photoUrl||''}" alt="">
+          <div class="itext"><div class="ititle">${esc(a.name)}</div><div class="isub">Исполнитель</div></div>
+          <div class="iact" data-edit="${a.id}">Изменить</div>
+        </div>`).join('');
+      alist.querySelectorAll('[data-edit]').forEach(x=>x.onclick=()=>openArtistEdit(x.dataset.edit));
+    };
+    render();
+    qEl.oninput = render;
+  });
+
+  // big action button
+  bigbar.innerHTML = `<button class="bigbtn" id="addArtistBig">Добавить исполнителя</button>`;
+  $('#addArtistBig').onclick = openArtistAdd;
+}
+
+function renderSongs(){
+  const page = document.createElement('div');
+  page.className='card';
+  page.innerHTML = `
+    <div class="header"><h1>Песни</h1></div>
+    <div class="searchRow">
+      <input id="searchSongs" class="search" placeholder="Поиск">
+    </div>
+    <div id="slist" class="list"></div>
+  `;
+  app.innerHTML=''; app.appendChild(page);
+
+  const slist = page.querySelector('#slist');
+  slist.innerHTML = Array.from({length:3}).map(()=>`
+    <div class="sitem"><div class="a"></div><div class="b" style="flex:1">
+      <div class="skel" style="width:40%"></div><div class="skel" style="width:60%"></div></div></div>`).join('');
+
+  ensureLoaded().then(()=>{
+    const qEl = page.querySelector('#searchSongs');
+    const render = ()=>{
+      const q=(qEl.value||'').toLowerCase().trim();
+      const data = songs.filter(s=>!q || s.title.toLowerCase().includes(q) || (findArtist(s.artistId)?.name||'').toLowerCase().includes(q));
+      if(!data.length){ slist.innerHTML = `<div class="isub" style="padding:18px">Ничего не найдено</div>`; return; }
+      slist.innerHTML = data.map(s=>{
+        const a = findArtist(s.artistId);
+        return `
+        <div class="item">
+          <img class="avatar" src="${a?.photoUrl||''}" alt="">
+          <div class="itext"><div class="ititle"><a style="text-decoration:none;color:inherit" href="#/song/${s.id}">${esc(s.title)}</a></div><div class="isub">${esc(a?.name||'—')}</div></div>
+          <div class="iact" data-edit="${s.id}">Изменить</div>
+        </div>`;
+      }).join('');
+      slist.querySelectorAll('[data-edit]').forEach(x=>x.onclick=()=>openSongEdit(x.dataset.edit));
+    };
+    render();
+    qEl.oninput = render;
+  });
+
+  bigbar.innerHTML = `<button class="bigbtn" id="addSongBig">Добавить текст песни</button>`;
+  $('#addSongBig').onclick = openSongAdd;
+}
+
+function renderSongPage(songId){
+  const s = songs.find(x=>String(x.id)===String(songId));
+  if(!s){ app.innerHTML = `<div class="isub">Песня не найдена</div>`; return; }
+  const a = findArtist(s.artistId);
+  app.innerHTML = `
+    <div class="songCard">
+      <div class="shead">
+        <div>
+          <div style="font-weight:900;font-size:22px">${esc(s.title)}</div>
+          <div class="smeta">${esc(a?.name||'—')}</div>
         </div>
-      </div>`;
-    card.querySelectorAll('.chip').forEach(ch=>ch.onclick=()=>openSong(+ch.dataset.id));
-    alist.appendChild(card);
+        <a class="btn" href="#/songs">✕</a>
+      </div>
+
+      <div class="bar">
+        <button id="scrollToggle" class="btn btn-accent">Авто-прокрутка ▷</button>
+        <label style="color:var(--muted)">Скорость <input id="scrollSpeed" type="range" min="10" max="120" value="50" style="vertical-align:middle"></label>
+        <button id="tDown" class="ghost">Трансп. −</button>
+        <button id="tUp"   class="ghost">Трансп. +</button>
+        <select id="fontSel">
+          <option value="15">Шрифт 15</option>
+          <option value="16" selected>Шрифт 16</option>
+          <option value="18">Шрифт 18</option>
+          <option value="20">Шрифт 20</option>
+          <option value="22">Шрифт 22</option>
+        </select>
+      </div>
+
+      <div id="lyrics" class="lyrics"></div>
+    </div>
+  `;
+
+  // init player controls
+  let current = {...s};
+  const lyricsEl = $('#lyrics');
+  const fontSel = $('#fontSel');
+  function renderLyrics(){ lyricsEl.style.fontSize=(fontSel.value||16)+'px'; lyricsEl.innerHTML = parseChordPro(current.text||''); }
+  renderLyrics();
+  $('#tDown').onclick=()=>{ current.text=tText(current.text,-1); if(current.key) current.key=tChord(current.key,-1); renderLyrics(); };
+  $('#tUp').onclick  =()=>{ current.text=tText(current.text, 1); if(current.key) current.key=tChord(current.key, 1); renderLyrics(); };
+
+  let scrollTimer=null;
+  $('#scrollToggle').onclick=()=>{ if(scrollTimer){ stop(); } else start(); };
+  function start(){ if(scrollTimer) return; $('#scrollToggle').textContent='Авто-прокрутка ❚❚';
+    const step=()=>{ window.scrollBy(0, Number($('#scrollSpeed').value||50)/33.3); scrollTimer=requestAnimationFrame(step); };
+    scrollTimer=requestAnimationFrame(step);
   }
-}
-catSearch.oninput=renderCatalog;
-
-/* ===== PLAYER ===== */
-const pTitle=document.getElementById('pTitle');
-const pArtist=document.getElementById('pArtist');
-const lyricsEl=document.getElementById('lyrics');
-const fontSel=document.getElementById('fontSel');
-document.getElementById('tDown').onclick=()=>transposeCurrent(-1);
-document.getElementById('tUp').onclick=()=>transposeCurrent(+1);
-fontSel.onchange=()=>lyricsEl.style.fontSize=fontSel.value+'px';
-document.getElementById('printBtn').onclick=()=>window.print();
-
-function openSong(id){
-  const s=songs.find(x=>x.id===id); if(!s) return;
-  currentSongId=id;
-  pTitle.textContent = s.title || '—';
-  pArtist.textContent = artistName(s.artistId);
-  lyricsEl.style.fontSize=(fontSel.value||16)+'px';
-  lyricsEl.innerHTML=parseChordPro(s.text||'');
-  showPlayer();
+  function stop(){ $('#scrollToggle').textContent='Авто-прокрутка ▷'; if(scrollTimer){ cancelAnimationFrame(scrollTimer); scrollTimer=null; } }
+  fontSel.onchange=renderLyrics;
 }
 
-/* ===== AUTO SCROLL ===== */
-let scrollTimer=null;
-const scrollBtn=document.getElementById('scrollToggle');
-const scrollSpeed=document.getElementById('scrollSpeed');
-scrollBtn.onclick=()=>{
-  if(scrollTimer){ stopScroll(); return;}
-  startScroll();
-};
-function startScroll(){
-  if(scrollTimer) return;
-  scrollBtn.textContent='Авто-прокрутка ❚❚';
-  const step=()=>{ window.scrollBy(0, speedToPx()); scrollTimer=window.requestAnimationFrame(step); };
-  scrollTimer=window.requestAnimationFrame(step);
+/* ========= UTILS ========= */
+function findArtist(id){ return artists.find(a=>String(a.id)===String(id)); }
+
+/* ========= OPEN FORMS ========= */
+function openArtistAdd(){ openArtistModal(); }
+function openArtistEdit(id){
+  const a=findArtist(id); if(!a) return;
+  openArtistModal(a);
 }
-function stopScroll(){
-  scrollBtn.textContent='Авто-прокрутка ▷';
-  if(scrollTimer){ cancelAnimationFrame(scrollTimer); scrollTimer=null; }
+async function openArtistModal(a=null){
+  $('#artistModalTitle').textContent = a? 'Изменить исполнителя' : 'Добавить исполнителя';
+  $('#aId').value = a?.id || '';
+  $('#aName').value = a?.name || '';
+  $('#aBio').value = a?.bio || '';
+  $('#aPhoto').value = '';
+  $('#artistModal').showModal();
 }
-function speedToPx(){ // скорость 10..120 -> 0.3..3.6 px/кадр
-  const v=Number(scrollSpeed.value||50);
-  return (v/33.3); // ~1.5px при 50
+function openSongAdd(){ openSongModal(); }
+function openSongEdit(id){
+  const s = songs.find(x=>String(x.id)===String(id)); if(!s) return;
+  openSongModal(s);
 }
-window.addEventListener('visibilitychange',()=>{ if(document.hidden) stopScroll(); });
-
-function transposeCurrent(step){
-  if(currentSongId==null) return;
-  const s=songs.find(x=>x.id===currentSongId); if(!s) return;
-  s.text=tText(s.text,step); if(s.key) s.key=tChord(s.key,step); save();
-  openSong(currentSongId);
-}
-
-/* ===== MANAGE (Authors/Songs) ===== */
-const mSearch=document.getElementById('mSearch');
-const mArtists=document.getElementById('mArtists');
-const mSongs=document.getElementById('mSongs');
-function renderManage(){
-  const q=(mSearch.value||'').toLowerCase().trim();
-
-  // artists
-  mArtists.innerHTML='';
-  for(const a of artists.filter(a=>!q || a.name.toLowerCase().includes(q))){
-    const it=document.createElement('div'); it.className='row';
-    const letter=(a.name||'?').slice(0,1).toUpperCase();
-    it.innerHTML=`<div class="av">${letter}</div>
-      <div style="flex:1"><div style="font-weight:800">${esc(a.name)}</div><div class="cbio">${esc(a.bio||'')}</div></div>
-      <button class="btn" data-id="${a.id}">Редакт.</button>
-      <button class="btn" data-del="${a.id}">Удалить</button>`;
-    it.querySelector('[data-id]').onclick=()=>openArtistModal(a);
-    it.querySelector('[data-del]').onclick=()=>delArtist(a.id);
-    mArtists.appendChild(it);
-  }
-
-  // songs
-  mSongs.innerHTML='';
-  const items=songs
-    .map(s=>({...s,_artist:artistName(s.artistId)}))
-    .filter(s=>!q || (s.title||'').toLowerCase().includes(q) || s._artist.toLowerCase().includes(q))
-    .sort((a,b)=>a.title.localeCompare(b.title,'ru'));
-
-  for(const s of items){
-    const it=document.createElement('div'); it.className='row';
-    const letter=(s.title||'?').slice(0,1).toUpperCase();
-    it.innerHTML=`<div class="av">${letter}</div>
-      <div style="flex:1"><div style="font-weight:800">${esc(s.title)}</div><div class="cbio">${esc(s._artist)}</div></div>
-      <button class="btn" data-open="${s.id}">Открыть</button>
-      <button class="btn" data-edit="${s.id}">Редакт.</button>
-      <button class="btn" data-del="${s.id}">Удалить</button>`;
-    it.querySelector('[data-open]').onclick=()=>openSong(s.id);
-    it.querySelector('[data-edit]').onclick=()=>openSongModal(s);
-    it.querySelector('[data-del]').onclick=()=>delSong(s.id);
-    mSongs.appendChild(it);
-  }
-}
-mSearch.oninput=()=>renderManage();
-
-/* ===== MODALS ===== */
-const artistModal=document.getElementById('artistModal');
-const aName=document.getElementById('aName');
-const aBio=document.getElementById('aBio');
-const aPhoto=document.getElementById('aPhoto');
-document.getElementById('addArtistBtn').onclick=()=>openArtistModal(null);
-document.getElementById('closeArtistModal').onclick=()=>artistModal.close();
-document.getElementById('saveArtist').onclick=saveArtist;
-
-let editingArtistId=null;
-function openArtistModal(a){
-  editingArtistId=a?a.id:null;
-  aName.value=a?.name||''; aBio.value=a?.bio||''; aPhoto.value='';
-  artistModal.showModal();
-}
-async function saveArtist(){
-  const name=aName.value.trim(); if(!name){alert('Имя обязательно');return;}
-  let photoData='';
-  const f=aPhoto.files?.[0]; if(f) photoData=await fileToDataURL(f);
-  if(editingArtistId){
-    const i=artists.findIndex(x=>x.id===editingArtistId);
-    if(i>=0){ artists[i]={...artists[i],name, bio:aBio.value.trim(), photo:photoData||artists[i].photo}; }
-  }else{
-    artists.push({id:Date.now(), name, bio:aBio.value.trim(), photo:photoData});
-  }
-  save(); artistModal.close(); renderCatalog(); renderManage(); refreshArtistSelect();
-}
-function delArtist(id){
-  if(!confirm('Удалить исполнителя и оставить его песни без привязки?')) return;
-  artists=artists.filter(a=>a.id!==id);
-  songs=songs.map(s=>s.artistId===id?{...s,artistId:null}:s);
-  save(); renderCatalog(); renderManage(); refreshArtistSelect();
-}
-function fileToDataURL(f){ return new Promise(res=>{const r=new FileReader(); r.onload=()=>res(r.result); r.readAsDataURL(f);}); }
-
-const songModal=document.getElementById('songModal');
-const sTitle=document.getElementById('sTitle');
-const sArtistSel=document.getElementById('sArtistSel');
-const sKey=document.getElementById('sKey');
-const sTags=document.getElementById('sTags');
-const sText=document.getElementById('sText');
-document.getElementById('addSongBtn').onclick=()=>openSongModal(null);
-document.getElementById('closeSongModal').onclick=()=>songModal.close();
-document.getElementById('saveSong').onclick=saveSong;
-
-let editingSongId=null;
 function refreshArtistSelect(){
-  sArtistSel.innerHTML=`<option value="">— без привязки —</option>`+artists.map(a=>`<option value="${a.id}">${esc(a.name)}</option>`).join('');
+  $('#sArtistSel').innerHTML = `<option value="">— без привязки —</option>` + artists.map(a=>`<option value="${a.id}">${esc(a.name)}</option>`).join('');
 }
-function openSongModal(s){
-  editingSongId=s?s.id:null;
+function openSongModal(s=null){
+  $('#songModalTitle').textContent = s? 'Изменить песню' : 'Добавить песню';
+  $('#sId').value = s?.id || '';
+  $('#sTitle').value = s?.title || '';
   refreshArtistSelect();
-  sTitle.value=s?.title||''; sArtistSel.value=s?.artistId||''; sKey.value=s?.key||''; sTags.value=s?.tags||''; sText.value=s?.text||'';
-  songModal.showModal();
+  $('#sArtistSel').value = s?.artistId || '';
+  $('#sKey').value = s?.key || '';
+  $('#sTags').value = s?.tags || '';
+  $('#sText').value = s?.text || '';
+  $('#songModal').showModal();
 }
-function saveSong(){
-  const body={ title:sTitle.value.trim(), artistId:sArtistSel.value?Number(sArtistSel.value):null, key:sKey.value.trim(), tags:sTags.value.trim(), text:sText.value.replace(/\r\n/g,'\n') };
-  if(editingSongId){ const i=songs.findIndex(x=>x.id===editingSongId); if(i>=0) songs[i]={...songs[i],...body}; }
-  else { songs.push({id:Date.now(),...body}); }
-  save(); songModal.close(); renderManage(); renderCatalog();
-}
-function delSong(id){ if(confirm('Удалить песню?')){ songs=songs.filter(s=>s.id!==id); save(); renderManage(); renderCatalog(); } }
 
-/* ===== IMPORT/EXPORT ===== */
-document.getElementById('exportBtn').onclick=()=>{
-  const blob=new Blob([JSON.stringify({artists,songs},null,2)],{type:'application/json;charset=utf-8'});
-  const url=URL.createObjectURL(blob); const a=Object.assign(document.createElement('a'),{href:url,download:'sadoitor.json'});
-  document.body.appendChild(a); a.click(); URL.revokeObjectURL(url); a.remove();
-};
-document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();
-document.getElementById('importFile').addEventListener('change',async (e)=>{
-  const f=e.target.files[0]; if(!f) return; const text=await f.text();
-  try{ const data=JSON.parse(text);
-    if(data.artists&&data.songs){ artists=data.artists; songs=data.songs; save(); renderCatalog(); renderManage(); refreshArtistSelect(); alert('Импорт выполнен'); }
-    else alert('Неверный формат'); }
-  catch(err){ alert('Ошибка импорта: '+err.message) }
+/* ========= SAVE HANDLERS (с анимацией на кнопке) ========= */
+function withBtnSpinner(btn, fn){
+  const label = btn.querySelector('.btnText'); const old = label.textContent;
+  label.textContent = 'Сохранение…'; btn.disabled=true;
+  return fn().finally(()=>{ label.textContent = old; btn.disabled=false; });
+}
+$('#saveArtist').onclick = ()=> withBtnSpinner($('#saveArtist'), async ()=>{
+  const id = $('#aId').value || undefined;
+  const name = $('#aName').value.trim(); if(!name){ toast('Имя исполнителя обязательно'); return; }
+  let photoData=''; const f=$('#aPhoto').files?.[0]; if(f) photoData = await fileToDataURL(f);
+  showOverlay(true);
+  try{
+    const r = await api('upsertArtist', { id, name, bio:$('#aBio').value.trim(), photoData });
+    if(!r.ok) throw new Error(r.error||'Ошибка сохранения');
+    $('#artistModal').close();
+    await loadAll();
+    toast(id? 'Изменения сохранены' : 'Исполнитель добавлен');
+    route();
+  }catch(e){ toast('Ошибка: '+e.message, 3500); }
+  finally{ showOverlay(false); }
 });
 
-/* ===== INIT (демо + старт) ===== */
-if(artists.length===0){ artists.push({id:1,name:'Demo Artist',bio:'Пример исполнителя',photo:''}); }
-if(songs.length===0){
-  songs.push({id:Date.now(),title:'Намуна',artistId:1,key:'Am',tags:'demo',
-  text:`[Am]Симинбари [E]гулпайкаре, оре,
-[Am]Аз моху гул [E]зеботарин оре,
+$('#saveSong').onclick = ()=> withBtnSpinner($('#saveSong'), async ()=>{
+  const id = $('#sId').value || undefined;
+  const title = $('#sTitle').value.trim(); if(!title){ toast('Название песни обязательно'); return; }
+  const payload = {
+    id, title,
+    artistId: $('#sArtistSel').value || '',
+    key: $('#sKey').value.trim(),
+    tags: $('#sTags').value.trim(),
+    text: $('#sText').value.replace(/\r\n/g,'\n')
+  };
+  showOverlay(true);
+  try{
+    const r = await api('upsertSong', payload);
+    if(!r.ok) throw new Error(r.error||'Ошибка сохранения');
+    $('#songModal').close();
+    await loadAll();
+    toast(id? 'Изменения сохранены' : 'Песня добавлена');
+    route();
+  }catch(e){ toast('Ошибка: '+e.message, 3500); }
+  finally{ showOverlay(false); }
+});
 
-[Dm]Хамчун [E]пари [Am]афсунгарӣ, оре,
+$('#closeArtistModal').onclick = ()=>$('#artistModal').close();
+$('#closeSongModal').onclick   = ()=>$('#songModal').close();
 
-[Am]Девонаи [Dm]рӯят [F]манам, [Am]чӣ хoҳӣ дигар аз ман,
-[Am]Саргаштаи [Dm]рӯят [F]манам, [Am]надорӣ хабар аз ман...`});
-  save();
-}
-renderCatalog(); renderManage(); refreshArtistSelect();
-showCatalog(); // старт — Каталог
+/* ========= INIT ========= */
+(async function init(){
+  await loadAll();
+  route();
+})();
 </script>
 </body>
 </html>

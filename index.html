@@ -114,7 +114,7 @@ select{border:1px solid var(--line);border-radius:12px;background:#fff;padding:8
 
 <!-- Modals -->
 <dialog id="artistModal">
-  <div class="dhead"><strong id="artistModalTitle">Исполнитель</strong><button id="closeArtistModal" class="btn">✕</button></div>
+  <div class="dhead"><strong id="artistModalTitle">Исполнитель</strong><button id="closeArtistModal" class="btn">Закрыть</button></div>
   <div class="dbody">
     <input type="hidden" id="aId">
     <div class="field"><label>Имя</label><input id="aName" placeholder="Напр.: Далер"></div>
@@ -125,7 +125,7 @@ select{border:1px solid var(--line);border-radius:12px;background:#fff;padding:8
 </dialog>
 
 <dialog id="songModal">
-  <div class="dhead"><strong id="songModalTitle">Песня</strong><button id="closeSongModal" class="btn">✕</button></div>
+  <div class="dhead"><strong id="songModalTitle">Песня</strong><button id="closeSongModal" class="btn">Закрыть</button></div>
   <div class="dbody">
     <input type="hidden" id="sId">
     <div class="row">
@@ -341,7 +341,7 @@ function renderSongPage(songId){
           <div style="font-weight:900;font-size:22px">${escapeHtml(s.title)}</div>
           <div class="smeta">${escapeHtml(a?.name||'—')}</div>
         </div>
-        <a class="btn" href="#/songs">✕</a>
+        <a class="btn" href="#/songs">Закрыть</a>
       </div>
 
       <div class="bar">
@@ -351,7 +351,7 @@ function renderSongPage(songId){
         <button id="tUp"   class="ghost">Трансп. +</button>
         <select id="fontSel">
           
-	<option value="12">Шрифт 12</option>
+	<option value="12">Шрифт 15</option>
 <option value="13">Шрифт 13</option>
 <option value="14">Шрифт 14</option>
 <option value="15">Шрифт 15</option>
